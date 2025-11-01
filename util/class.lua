@@ -1,4 +1,8 @@
-Class = {}
+---@class Class
+-- -@field classname string
+Class = {
+	-- classname = "Class",
+}
 
 -- default (empty) constructor
 function Class:init(...) end
@@ -102,3 +106,5 @@ function class(attr)
 	attr = attr or {}
 	return Class:extend(attr)
 end
+
+-- return Class
