@@ -1,24 +1,26 @@
-local M = {}
+local M = {
+	font = love.graphics.newFont("/assets/fonts/slapduck.ttf", 64, "none"),
+	bitSize = 32,
+	bitSpace = 48,
+}
 
 function M:load()
-	self.font = love.graphics.newFont("/assets/fonts/slapduck.ttf", 64, "none")
 	self.font:setFilter("nearest", "nearest")
 	love.graphics.setFont(self.font)
-	self.bitSize = 32
-	self.bitSpace = 48
 	self.canvas = love.graphics.newCanvas(6 * self.bitSpace, 4 * self.bitSpace)
-	self.canvas:setFilter("nearest", "nearest")
 	self.finalCanvas = love.graphics.newCanvas(self.canvas:getWidth() * 2 + 32, self.canvas:getHeight() * 2 + 32)
-	self.finalCanvas:setFilter("nearest", "nearest")
 	self.text_y = self.bitSize
+
+	self.canvas:setFilter("nearest", "nearest")
+	self.finalCanvas:setFilter("nearest", "nearest")
+
+	love.graphics.setLineStyle("rough")
 end
 --function M:update()
 --end
 
 function M:draw()
 	love.graphics.setCanvas(self.canvas)
-	--love.graphics.setLineWidth(2)
-	love.graphics.setLineStyle("rough")
 	love.graphics.clear()
 	local time = os.time()
 
@@ -28,15 +30,11 @@ function M:draw()
 
 	love.graphics.setColor(0, 0.8, 0, 1)
 
-	--love.graphics.print(self:numToBinary(tonumber(hours)) .. "H", 128, 128)
 	self:drawBinaryNumber(self:numToBinary(tonumber(hours)), 4, self.bitSpace + self.bitSize / 2, self.bitSpace)
-	--love.graphics.print(self:numToBinary(tonumber(mins)) .. "M", 128, 192)
 	self:drawBinaryNumber(self:numToBinary(tonumber(mins)), 5, self.bitSize / 2, self.bitSpace * 2)
-	--love.graphics.print(self:numToBinary(tonumber(secs)) .. "S", 128, 256)
 	self:drawBinaryNumber(self:numToBinary(tonumber(secs)), 5, self.bitSize / 2, self.bitSpace * 3)
 	love.graphics.setCanvas()
 
-	--love.graphics.setCanvas()
 	love.graphics.setCanvas(self.finalCanvas)
 	love.graphics.clear()
 	love.graphics.draw(self.canvas, 16, 32, 0, 2, 2)
@@ -58,8 +56,6 @@ function M:draw()
 end
 
 function M:drawBinaryNumber(num, bits, x, y)
-	local bitSize = self.bitSize
-	local bitSpace = self.bitSpace
 	local empty = bits - #num
 	for i = 0, empty do
 		love.graphics.circle("line", x + i * self.bitSpace, y, self.bitSize / 2)
