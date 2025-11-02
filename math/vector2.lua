@@ -9,6 +9,11 @@ Vector2 = Class:extend({
 	-- classname = "Vector2",
 })
 
+function Vector2:init(x, y)
+	self.x = x
+	self.y = y
+end
+
 function Vector2:__add(other)
 	local v = self:new()
 	v.x = v.x + (other["x"] or 0)

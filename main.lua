@@ -5,13 +5,16 @@ function love.load()
 	binary = require("clocks.binary1")
 	unix = require("clocks.unixtime")
 	metacircles = require("sim.metacircles")
+	hrt = require("game.hrt.hrt")
 	savers = {
 		binary,
 		unix,
 		metacircles,
+		hrt,
 	}
 
-	saver = chooseRandom(savers)
+	-- saver = chooseRandom(savers)
+	saver = hrt
 	print("saver ", saver)
 
 	saver:load()
@@ -36,6 +39,8 @@ function love.keypressed(key, scancode, isrepeat)
 			saver = chooseRandom(savers)
 		end
 		saver:load()
+	elseif saver["handleInput"] ~= nil then
+		saver:handleInput(key, scancode, isrepeat)
 	elseif key == "space" and not isrepeat and saver["action"] ~= nil then
 		saver:action()
 	end
