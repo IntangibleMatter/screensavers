@@ -14,7 +14,7 @@ Horse = HrtObject:extend({
 
 function Horse:update(dt)
 	self:recalculate_velocity()
-	self:move()
+	self:move(dt)
 	if self.position.x > 640 then
 		self.position.x = 2
 	elseif self.position.x < 0 then
@@ -27,9 +27,10 @@ function Horse:update(dt)
 	end
 end
 
-function Horse:move()
-	local rx = math.floor(self.velocity.x)
-	local ry = math.floor(self.velocity.y)
+---@param dt number
+function Horse:move(dt)
+	local rx = math.floor(self.velocity.x * dt)
+	local ry = math.floor(self.velocity.y * dt)
 
 	while rx ~= 0 or ry ~= 0 do
 		if rx ~= 0 then
@@ -38,10 +39,10 @@ function Horse:move()
 			rx = rx - sign(rx)
 
 			if self:collision_checks() then
-				print("COLLISIONX", x1, rx)
+				print("COLLISIONX", x1, rx, self.position.x)
 				rx = 0
 				self.position.x = x1
-				self.direction = self.direction + math.pi
+				self.direction = self.direction + math.random(math.pi * 2)
 			end
 		end
 		if ry ~= 0 then
@@ -50,7 +51,7 @@ function Horse:move()
 			ry = ry - sign(ry)
 
 			if self:collision_checks() then
-				print("COLLISIONY", y1, ry)
+				print("COLLISIONY", y1, ry, self.position.y)
 				ry = 0
 				self.position.x = y1
 				self.direction = self.direction + math.pi

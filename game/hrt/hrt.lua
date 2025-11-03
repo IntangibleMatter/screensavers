@@ -18,12 +18,14 @@ function M:load()
 	jov.direction = math.pi / 3
 	local yel = Horse:new()
 	yel:setImageData(love.image.newImageData("assets/graphics/hrt/yellow.png"))
+	yel.direction = math.pi
 
 	table.insert(self.objects, jov)
 	table.insert(self.objects, yel)
 
 	for _, o in pairs(self.objects) do
 		o.context = self
+		-- o:recalculate_velocity()
 	end
 end
 
