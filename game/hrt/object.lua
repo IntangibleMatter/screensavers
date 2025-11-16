@@ -19,9 +19,13 @@ HrtObject = Class:extend({
 	context = nil,
 })
 
-function HrtObject:init()
+function HrtObject:init(opts)
 	self.collider = Rect:new()
 	self.position = Vector2:new(256, 256)
+	for k, v in pairs(opts) do
+		-- print("set?", k, v, type(v))
+		self[k] = v
+	end
 end
 
 ---@param dt number
@@ -40,6 +44,14 @@ function HrtObject:collision_checks()
 				return true
 			end
 		end
+	end
+	if
+		self.position.x <= 0
+		or self.position.y <= 0
+		or self.position.x + self.imgdata:getWidth() >= 640
+		or self.position.y + self.imgdata:getHeight() >= 480
+	then
+		return true
 	end
 	return false
 end

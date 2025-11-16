@@ -6,12 +6,20 @@ require("util.class")
 Vector2 = Class:extend({
 	x = 0,
 	y = 0,
+	magnitude = function(self)
+		return math.sqrt(self.x * self.x + self.y * self.y)
+	end,
 	-- classname = "Vector2",
 })
 
 function Vector2:init(x, y)
 	self.x = x
 	self.y = y
+end
+
+---@return number
+function Vector2:magnitude()
+	return math.sqrt(self.x * self.x + self.y * self.y)
 end
 
 function Vector2:__add(other)

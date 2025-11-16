@@ -1,7 +1,8 @@
 saver = nil
 
 function love.load()
-	love.window.setMode(1920, 1080, { fullscreen = true, fullscreentype = "desktop", resizable = true })
+	--love.window.setMode(1920, 1080, { fullscreen = true, fullscreentype = "desktop", resizable = true })
+	love.window.setMode(640, 480, { fullscreen = false, fullscreentype = "desktop", resizable = false })
 	binary = require("clocks.binary1")
 	unix = require("clocks.unixtime")
 	metacircles = require("sim.metacircles")

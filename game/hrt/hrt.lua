@@ -13,15 +13,28 @@ function M:load()
 	self.canvas = love.graphics.newCanvas(640, 480)
 
 	---@type Horse
-	local jov = Horse:new()
+	local jov = Horse:new({
+		position = Vector2:new(320, 240),
+		direction = math.random() * math.pi * 2,
+		-- speed = 100,
+	})
+	-- print("dir", jov.direction, jov.position.x, jov.position.y, jov.speed)
 	jov:setImageData(love.image.newImageData("assets/graphics/hrt/jovial.png"))
-	jov.direction = math.pi / 3
-	local yel = Horse:new()
+	-- jov.direction = 3 * math.pi / 4
+	-- jov.position.x = 200
+	-- jov.position.y = 300
+	local yel = Horse:new({
+		position = Vector2:new(100, 100),
+	})
 	yel:setImageData(love.image.newImageData("assets/graphics/hrt/yellow.png"))
-	yel.direction = math.pi
+	yel.direction = math.pi * 2 * math.random()
 
 	table.insert(self.objects, jov)
 	table.insert(self.objects, yel)
+
+	-- for k, v in pairs(jov) do
+	-- 	print("jov", k, v)
+	-- end
 
 	for _, o in pairs(self.objects) do
 		o.context = self
@@ -68,7 +81,7 @@ function M:draw()
 		object:draw()
 	end
 	love.graphics.setCanvas()
-	love.graphics.draw(self.canvas, 0, 0, 0, 2, 2)
+	love.graphics.draw(self.canvas, 0, 0, 0, 1, 1)
 end
 
 function M:action() end

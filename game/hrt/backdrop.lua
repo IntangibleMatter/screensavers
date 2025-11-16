@@ -8,6 +8,14 @@ Backdrop = HrtObject:extend({
 	collider_size = 32,
 })
 
+function Backdrop:draw()
+	HrtObject.draw(self)
+	--todo: draw all the colliders
+	for _, col in pairs(self.colliders) do
+		col:draw_bounds()
+	end
+end
+
 function Backdrop:generate_colliders()
 	---@return boolean
 	local check_for_pixels = function(sx, sy)
